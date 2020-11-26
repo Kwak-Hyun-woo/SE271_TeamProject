@@ -1,5 +1,5 @@
 #include "tp.h"
-
+#include <ctime>
 #include <iostream>
 #include <windows.h>
 
@@ -93,7 +93,7 @@ void Seat::print_status() {    // 좌석 정보 출력
 	if (reserved) {
 		std::cout << "예약됨" << std::endl;
 		std::cout << "예약자 : " << reserved_student_name << "(" << reserved_student_num << ")" << std::endl;
-		std::cout << "예약 시각 : 미구현" << std::endl;
+		std::cout << "예약 종료 시각 : " << time_num << "시" << " " << time_min << "분" << std::endl;
 	}
 	else {
 		std::cout << "예약되어 있지 않음 (예약 가능)" << std::endl;
@@ -104,11 +104,13 @@ bool Seat::is_reserved() {						// 예약 여부 리턴
 	return reserved;
 }
 
-void Seat::reserve(int num, std::string& name, int pw) {		// 예약
+void Seat::reserve(int num, std::string& name, int pw, int time, int min) {		// 예약
 	reserved = true;
 	reserved_student_name = name;
 	reserved_student_num = num;
 	password = pw;
+	time_num = time;
+	time_min = min;
 }
 
 bool Seat::cancelation() {									// 예약 취소, 취소 성공 여부를 bool type으로 리턴
@@ -218,7 +220,11 @@ void StudyRoom::print() {									// 현재 독서실 좌석 상황을 출력
 				}
 				else if (high == 3) {
 					if (seat_instance_list[seat_num - 1].is_reserved()) {
-						std::cout << "|  예약됨  |";
+						std::cout << "|";
+						setcolor(3, 0);
+						std::cout << "  예약됨  ";
+						setcolor(255, 0);
+						std::cout << "|";
 					}
 					else {
 						std::cout << "|          |";
@@ -257,6 +263,10 @@ void StudyRoom::reserve(int num) {
 	int st_num;
 	std::string st_name;
 	int pw;
+	int time_num;
+	int time_min;
+	std::cout << "1. 1시간    2. 2시간    3. 3시간    4. 4시간    5. 5시간    6. 6시간" << "\n입력 : ";
+	std::cin >> time_num;
 	std::cout << "학번을 입력해 주십시오 : ";
 	std::cin >> st_num;
 	std::cout << std::endl << "이름을 입력해 주십시오 : ";
@@ -268,7 +278,13 @@ void StudyRoom::reserve(int num) {
 		Sleep(500);
 		return;
 	}
-	seat_instance_list[num - 1].reserve(st_num, st_name, pw);
+	time_t now;
+	struct tm nowLocal;
+	now = time(NULL);
+	nowLocal = *localtime(&now);
+	time_min = nowLocal.tm_min;
+	time_num = nowLocal.tm_hour + time_num;
+	seat_instance_list[num - 1].reserve(st_num, st_name, pw,time_num, time_min);
 	std::cout << std::endl << "예약이 완료되었습니다." << std::endl;
 }
 	// 예약 취소
@@ -293,6 +309,12 @@ void StudyRoom::show_seat_status(int num) {
 }
 StudyRoom::StudyRoom() {
 	init_setting = false;
+}
+void StudyRoom::setcolor(int color, int bgcolor)
+{
+	color &= 0xf;
+	bgcolor &= 0xf;
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (bgcolor << 4) | color);
 }
 
 // ------------------------------------------------------------------------------------------------------------

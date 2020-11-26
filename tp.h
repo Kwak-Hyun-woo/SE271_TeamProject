@@ -1,6 +1,6 @@
 #ifndef TP_H
 #define TP_H
-
+#include <Windows.h>
 #include <iostream>
 // 정수만을 보관하는 리스트. 기존 배열에 원소 하나를 추가하는 것을 간편하게 하기 위해 만듦
 class IntList {
@@ -25,13 +25,14 @@ private:
 	bool reserved;								// 예약 여부
 	int reserved_student_num;					// 예약자 학번
 	std::string reserved_student_name;			// 예약자 이름
-	int password;								// 예약 비밀번호
-
+	int password;	
+	int time_num;
+	int time_min;
 public:
 	void init_set(int num);
 
 	void print_status();
-	void reserve(int num, std::string& name, int pw);
+	void reserve(int num, std::string& name, int pw, int time, int min);
 
 	bool is_reserved();
 	bool cancelation();
@@ -60,6 +61,9 @@ public:
 
 	// 선택한 좌석의 정보를 출력
 	void show_seat_status(int num);
+	
+	// 예약 후 색상 변경
+	void setcolor(int color, int bgcolor);
 
 	StudyRoom();
 };
