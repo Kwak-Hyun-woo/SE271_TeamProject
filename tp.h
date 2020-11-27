@@ -18,7 +18,7 @@ public:
 	int get_size();
 };
 // ------------------------------------------------------------------------------------------------------------
-// Seat : 좌석 클래스
+// Seat: 좌석 클래스
 class Seat {
 private:
 	int seat_num;								// 좌석의 번호
@@ -37,7 +37,8 @@ public:
 	bool is_reserved();
 	bool cancelation();
 };
-// StudyRoom : 독서실 클래스
+
+// StudyRoom: 독서실 클래스
 class StudyRoom {
 private:
 	int** seat_coordinate;							// 독서실 내 좌석이 배치된 좌표 (2차원 배열)
@@ -68,6 +69,25 @@ public:
 	StudyRoom();
 };
 
+class Display {
+public:
+	void display();
+	 
+
+};
+
+class Student {
+private:
+	int id;                // 학번 (앞 4자리는 20XX여야 하고, 뒤에 숫자 5자리)
+	int pw;                // 예약에 사용될 비밀번호 4자리
+	bool is_admin;
+
+public:
+	Student(int id, int pw) : id{ id }, pw{ pw }, is_admin{ false } {};
+
+	void check_admin();
+
+};
 // ------------------------------------------------------------------------------------------------------------
 
 #endif
