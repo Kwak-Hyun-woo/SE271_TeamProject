@@ -1,6 +1,7 @@
 #include "tp.h"
 #include <ctime>
 #include <iostream>
+#include <vector>
 #include <windows.h>
 
 // 정수만을 보관하는 리스트. 기존 배열에 원소 하나를 추가하는 것을 간편하게 하기 위해 만듦
@@ -318,3 +319,17 @@ void StudyRoom::setcolor(int color, int bgcolor)
 }
 
 // ------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------
+// Student : 학생 클래스
+
+bool Student::check_admin() {
+	int admin[] = { 201911063 };
+	for (int admin_id : admin) if (admin_id == id) return true;
+	return false;
+}
+
+int Student::show_id() { return id; }
+
+int Student::show_pw() { return pw; }
+
+void Student::change_pw(int new_pw) { pw = new_pw; }

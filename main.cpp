@@ -83,3 +83,15 @@ int main() {
 	}
 	return 0;
 }
+
+// This will replace main function after fully complemented...
+int main2() {
+	// Open studyroom.txt and save it to variable
+	// Open student.txt and save it to variable
+	// Check if these files are correctly loaded!
+	
+	// After the booting sequence, launch interface1
+	
+	/* In DISPLAY1, S*/
+	
+}

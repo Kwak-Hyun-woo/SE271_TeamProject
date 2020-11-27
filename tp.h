@@ -85,7 +85,10 @@ private:
 public:
 	Student(int id, int pw) : id{ id }, pw{ pw }, is_admin{ false } {};
 
-	void check_admin();
+	bool check_admin();
+	int show_id();
+	int show_pw();
+	void change_pw(int new_pw);
 
 };
 // ------------------------------------------------------------------------------------------------------------
