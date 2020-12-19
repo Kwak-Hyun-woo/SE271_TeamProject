@@ -12,6 +12,8 @@ void Student::set_is_using_reverse() { is_using = !is_using; }
 void Student::set_studyroom_using(StudyRoom* room) { studyroom_using = room; }
 void Student::set_seat_using(Seat* seat) { seat_using = seat; }
 
+
+
 // class Seat - get data
 int Seat::get_seat_num() { return seat_num; }
 bool Seat::is_reserved() { return reservation; }
@@ -23,3 +25,11 @@ void Seat::set_reservation_reverse() { reservation = !reservation; }
 void Seat::set_res_student(Student* student) { res_student = student; }
 void Seat::set_away_from_reverse() { away_from = !away_from; }
 
+
+
+// class StudyRoom - get data
+int StudyRoom::get_cur_using_num() { return cur_using_num; }
+Seat* StudyRoom::get_seat(int idx) { return &(seats[idx]); }
+
+// set data
+void StudyRoom::set_cur_using_num(int i) { cur_using_num = i; }

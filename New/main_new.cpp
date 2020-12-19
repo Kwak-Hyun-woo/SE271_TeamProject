@@ -1,5 +1,4 @@
 #include "model.h"
+#include <iostream>
 
-void main() {
-	
-}
+void main() {}

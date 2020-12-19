@@ -1,26 +1,12 @@
 #pragma once
 
-#include <set>
+#include <vector>
 #include <string>
-
-#include "control.h"
 
 class Student;
 class Admin;
 class Seat;
 class StudyRoom;
-
-class LessCoordinate {					// Seat instance를 담는 set을 위한 functor << 좌표 작은 순으로 정렬
-public:
-	bool operator() (const Seat& s1, const Seat& s2) {
-		if (s1.coordinate[1] == s2.coordinate[1]) {
-			return s1.coordinate[0] < s2.coordinate[0];
-		}
-		else {
-			return s1.coordinate[1] < s2.coordinate[1];
-		}
-	}
-};
 
 class Student {
 private:
@@ -91,14 +77,14 @@ class StudyRoom {
 private:
 	int max_seat_num;					// 전체 좌석 수
 	int cur_using_num;					// 이용중인 좌석 수
-	std::set<Seat> seats;				// StudyRoom에 포함된 Seat instance set -> 항상 좌표 순서로 정렬된 상태를 유지하도록 set container 사용
+	std::vector<Seat> seats;				// StudyRoom에 포함된 Seat instance set -> 항상 좌표 순서로 정렬된 상태를 유지하도록 set container 사용
 public:
 	StudyRoom() {}
 	StudyRoom(int max) : max_seat_num{ max }, cur_using_num{ 0 } {}
 
 	// get data
 	int get_cur_using_num();
-	std::set<Seat, LessCoordinate>* get_seat(int idx);
+	Seat* get_seat(int idx);
 
 	// set data
 	void set_cur_using_num(int i);
