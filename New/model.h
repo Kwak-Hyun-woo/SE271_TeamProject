@@ -7,6 +7,7 @@ class Student;
 class Admin;
 class Seat;
 class StudyRoom;
+class StudentDB;
 
 class Student {
 private:
@@ -18,12 +19,13 @@ private:
 	
 public:
 	Student() {}
-	Student(int num, std::string pwd) : student_num{ num }, password{ pwd }, is_using{ false } {}
+	Student(int num) : student_num{ num }, is_using{ false } {}
 
 	virtual ~Student() {}
 	
 	// get data
 	int get_student_num();
+	bool get_is_using();
 	StudyRoom* get_studyroom_using();
 	Seat* get_seat_using();
 
@@ -37,14 +39,15 @@ public:
 
 class Admin : public Student {
 private:
-	
+	std::string admin_id;			// 관리자 계정 전용 ID
 public:
 	Admin() {}
+	Admin(std::string ad_id) : admin_id{ ad_id } {}
 };
 
 class Seat {
 private:
-	std::string belong_to;				// 어떤 독서실에 있는 좌석인가?
+	StudyRoom* belong_to;				// 어떤 독서실에 있는 좌석인가?
 	int seat_num;						// 좌석의 고유 번호
 	bool reservation;					// 현재 예약되어 있는지
 	Student* res_student;				// 예약한 학생
@@ -52,7 +55,7 @@ private:
 
 public:
 	Seat() {}
-	Seat(std::string study_room, int num, int pos[2]) : belong_to{ study_room }, seat_num{ num }, reservation{ false }, away_from{ false } {
+	Seat(StudyRoom* study_room, int num, int pos[2]) : belong_to{ study_room }, seat_num{ num }, reservation{ false }, away_from{ false } {
 		coordinate[0] = pos[0];
 		coordinate[1] = pos[1];
 	}
@@ -62,6 +65,7 @@ public:
 	int coordinate[2];					// 좌석의 위치
 
 	// get data
+	StudyRoom* get_belong_to();
 	int get_seat_num();
 	bool is_reserved();
 	Student* get_res_student();
@@ -77,7 +81,7 @@ class StudyRoom {
 private:
 	int max_seat_num;					// 전체 좌석 수
 	int cur_using_num;					// 이용중인 좌석 수
-	std::vector<Seat> seats;				// StudyRoom에 포함된 Seat instance set -> 항상 좌표 순서로 정렬된 상태를 유지하도록 set container 사용
+	std::vector<Seat> seats;			// StudyRoom에 포함된 Seat instance vector
 public:
 	StudyRoom() {}
 	StudyRoom(int max) : max_seat_num{ max }, cur_using_num{ 0 } {}
@@ -88,4 +92,17 @@ public:
 
 	// set data
 	void set_cur_using_num(int i);
+};
+
+// 프로그램에 등록된 Student/Admin을 관리하는 StudentDB 클래스
+class StudentDB {
+private:
+	std::vector<Student*> student_database;
+	std::vector<Admin*> admin_database;
+public:
+	void add_student(Student* student);
+	void add_admin(Admin* admin);
+
+	void get_student(int student_num);
+	void get_admin(std::string admin_id);
 };

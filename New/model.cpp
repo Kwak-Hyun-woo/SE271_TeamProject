@@ -2,6 +2,7 @@
 
 // class Studnet - get data
 int Student::get_student_num() { return student_num; }
+bool Student::get_is_using() { return is_using; }
 StudyRoom* Student::get_studyroom_using() { return studyroom_using; }
 Seat* Student::get_seat_using() { return seat_using; }
 
@@ -15,6 +16,7 @@ void Student::set_seat_using(Seat* seat) { seat_using = seat; }
 
 
 // class Seat - get data
+StudyRoom* Seat::get_belong_to() { return belong_to; }
 int Seat::get_seat_num() { return seat_num; }
 bool Seat::is_reserved() { return reservation; }
 Student* Seat::get_res_student() { return res_student; }
@@ -31,5 +33,20 @@ void Seat::set_away_from_reverse() { away_from = !away_from; }
 int StudyRoom::get_cur_using_num() { return cur_using_num; }
 Seat* StudyRoom::get_seat(int idx) { return &(seats[idx]); }
 
-// set data
+// class StudyRoom - set data
 void StudyRoom::set_cur_using_num(int i) { cur_using_num = i; }
+
+// class StudentDB
+void StudentDB::add_student(Student* student) {
+	student_database.push_back(student);
+}
+void StudentDB::add_admin(Admin* admin) {
+	admin_database.push_back(admin);
+}
+
+void StudentDB::get_student(int student_num) {
+
+}
+void get_admin(std::string admin_id) {
+
+}
