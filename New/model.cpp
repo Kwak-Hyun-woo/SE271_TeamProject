@@ -39,12 +39,14 @@ void Seat::set_res_student(Student* student){ res_student = student; }
 void Seat::set_away_from_reverse()			{ away_from = !away_from; }
 
 // class StudyRoom - get data
+std::string StudyRoom::get_name()			{ return name; }
 int StudyRoom::get_max_seat_num()			{ return max_seat_num; }
 int StudyRoom::get_cur_using_num()			{ return cur_using_num; }
 Seat* StudyRoom::get_seat(int idx)			{ return &(seats[idx]); }
 
 // class StudyRoom - set data
-void StudyRoom::set_cur_using_num(int i) { cur_using_num = i; }
+void StudyRoom::set_name(std::string studyroom_name)	{ name = studyroom_name; }
+void StudyRoom::set_cur_using_num(int i)				{ cur_using_num = i; }
 void StudyRoom::add_seat(Seat seat) {
 	if (cur_using_num == max_seat_num) {
 		std::cout << "더 이상 좌석을 추가할 수 없습니다." << std::endl;
@@ -169,4 +171,52 @@ Admin* StudentDB::get_admin(std::string admin_id) {
 		if (admin_id == admin->get_admin_id()) return admin;
 	}
 	return nullptr;
+}
+
+int StudyRoomDB::load_studyroom_database() {
+	std::fstream fs;
+	std::stringstream ss;
+	std::vector<std::string> row;
+	std::vector<std::vector<std::string>> rows;
+
+	fs.open("studyroom.csv", std::ios::in);
+
+	if (fs.fail()) {
+		return 1;
+	}
+
+	while (fs.good()) {
+		char c = fs.get();
+		if (c != '\n' && c != ',') {
+			ss << (char)fs.get();
+		}
+		else if (c == ',') {
+			row.push_back(ss.str());
+		}
+		else {
+			rows.push_back(row);
+		}
+	}
+
+	fs.close();
+
+	for (unsigned int i = 0; i < rows.size(); ++i) {
+		StudyRoom room(rows[i][0], stoi(rows[i][1]));
+		for (unsigned int j = 2; j < room.get_max_seat_num() * 2 + 2; j += 2) {
+			Pos pos(stoi(row[j]), stoi(row[j + 1]));
+			Seat seat(&room, (j - 2) / 2, pos);
+			room.add_seat(seat);
+		}
+		studyroom_database.push_back(&room);
+	}
+
+	return 0;
+}
+
+void save_studyroom_database() {
+
+}
+
+void add_studyroom(StudyRoom* studyroom) {
+
 }
