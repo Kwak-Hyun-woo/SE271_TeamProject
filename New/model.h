@@ -113,6 +113,7 @@ public:
 	int get_max_seat_num();
 	int get_cur_using_num();
 	Seat* get_seat(int idx);
+	std::vector<Seat> get_seats();
 
 	// set data
 	void set_name(std::string studyroom_name);

@@ -43,6 +43,7 @@ std::string StudyRoom::get_name()			{ return name; }
 int StudyRoom::get_max_seat_num()			{ return max_seat_num; }
 int StudyRoom::get_cur_using_num()			{ return cur_using_num; }
 Seat* StudyRoom::get_seat(int idx)			{ return &(seats[idx]); }
+std::vector<Seat> StudyRoom::get_seats()	{ return seats; }
 
 // class StudyRoom - set data
 void StudyRoom::set_name(std::string studyroom_name)	{ name = studyroom_name; }
@@ -213,10 +214,27 @@ int StudyRoomDB::load_studyroom_database() {
 	return 0;
 }
 
-void save_studyroom_database() {
+void StudyRoomDB::save_studyroom_database() {
+	std::string studyroom_db;
+	std::string row;
 
+	for (auto studyroom : studyroom_database) {
+		if (studyroom_db.size()) studyroom_db += '\n';
+		row = studyroom->get_name() + ',' + std::to_string(studyroom->get_max_seat_num());
+
+		for (auto seat : studyroom->get_seats()) {
+			row += ',' + std::to_string(seat.pos.x) + ',' + std::to_string(seat.pos.y);
+		}
+		
+		studyroom_db += row;
+	}
+
+	std::fstream fs;
+	fs.open("studyroom.csv");
+	fs.write(studyroom_db.c_str(), studyroom_db.size());
+	fs.close();
 }
 
-void add_studyroom(StudyRoom* studyroom) {
+void StudyRoomDB::add_studyroom(StudyRoom* studyroom) {
 
 }
