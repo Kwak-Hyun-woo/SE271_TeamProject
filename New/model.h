@@ -3,11 +3,25 @@
 #include <vector>
 #include <string>
 
+class Pos;
 class Student;
 class Admin;
 class Seat;
 class StudyRoom;
 class StudentDB;
+
+class Pos {
+public:
+	Pos() : x{ 0 }, y{ 0 } {}
+	Pos(int x, int y) : x{ x }, y{ y } {}
+	int x;
+	int y;
+
+	void operator()(int input_x, int input_y) {
+		x = input_x;
+		y = input_y;
+	}
+};
 
 class Student {
 private:
@@ -60,14 +74,14 @@ private:
 
 public:
 	Seat() {}
-	Seat(StudyRoom* study_room, int num, int pos[2]) : belong_to{ study_room }, seat_num{ num } {
-		coordinate[0] = pos[0];
-		coordinate[1] = pos[1];
+	Seat(StudyRoom* study_room, int num, Pos input_pos) : belong_to{ study_room }, seat_num{ num } {
+		pos.x = input_pos.x;
+		pos.y = input_pos.y;
 	}
 
 	virtual ~Seat() {}
 
-	int coordinate[2];					// 좌석의 위치
+	Pos pos;					// 좌석의 위치
 
 	// get data
 	StudyRoom* get_belong_to();
@@ -92,11 +106,13 @@ public:
 	StudyRoom(int max) : max_seat_num{ max }, cur_using_num{ 0 } {}
 
 	// get data
+	int get_max_seat_num();
 	int get_cur_using_num();
 	Seat* get_seat(int idx);
 
 	// set data
 	void set_cur_using_num(int i);
+	void add_seat(Seat seat);
 };
 
 // 프로그램에 등록된 Student/Admin을 관리하는 StudentDB 클래스
@@ -116,4 +132,13 @@ public:
 
 	Student* get_student(int student_num);
 	Admin* get_admin(std::string admin_id);
+};
+
+class StudyRoomDB {
+private:
+	std::vector<StudyRoom*> studyroom_database;
+public:
+	int load_studyroom_database();
+	void save_studyroom_database();
+	void add_studyroom(StudyRoom* studyroom);
 };

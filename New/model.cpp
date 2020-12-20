@@ -39,11 +39,13 @@ void Seat::set_res_student(Student* student){ res_student = student; }
 void Seat::set_away_from_reverse()			{ away_from = !away_from; }
 
 // class StudyRoom - get data
+int StudyRoom::get_max_seat_num()			{ return max_seat_num; }
 int StudyRoom::get_cur_using_num()			{ return cur_using_num; }
 Seat* StudyRoom::get_seat(int idx)			{ return &(seats[idx]); }
 
 // class StudyRoom - set data
 void StudyRoom::set_cur_using_num(int i)	{ cur_using_num = i; }
+void StudyRoom::add_seat(Seat seat)			{ seats.push_back(seat); }
 
 // class StudentDB
 int StudentDB::load_student_database() {

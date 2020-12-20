@@ -83,7 +83,7 @@ void LogIn::admin_log_in(StudentDB* db, ControlByAdmin* control_admin) {
 	}
 
 	std::cout << "관리자 권한으로 로그인 되었습니다." << std::endl;
-	control_admin->set_student(admin);
+	control_admin->set_admin(admin);
 }
 
 // ControlByStudent
