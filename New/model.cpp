@@ -7,40 +7,43 @@
 #include "model.h"
 
 // class Student - get data
-int Student::get_student_num() { return student_num; }
-std::string Student::get_password() { return password; }
-bool Student::get_is_using() { return is_using; }
-StudyRoom* Student::get_studyroom_using() { return studyroom_using; }
-Seat* Student::get_seat_using() { return seat_using; }
+int Student::get_student_num()				{ return student_num; }
+std::string Student::get_password()			{ return password; }
+bool Student::get_is_using()				{ return is_using; }
+StudyRoom* Student::get_studyroom_using()	{ return studyroom_using; }
+Seat* Student::get_seat_using()				{ return seat_using; }
 
 // class Student - set data
-void Student::set_student_num(int num) { student_num = num; }
-void Student::set_password(std::string pwd) { password = pwd; }
-void Student::set_is_using_reverse() { is_using = !is_using; }
-void Student::set_studyroom_using(StudyRoom* room) { studyroom_using = room; }
-void Student::set_seat_using(Seat* seat) { seat_using = seat; }
+void Student::set_student_num(int num)				{ student_num = num; }
+void Student::set_password(std::string pwd)			{ password = pwd; }
+void Student::set_is_using_reverse()				{ is_using = !is_using; }
+void Student::set_studyroom_using(StudyRoom* room)	{ studyroom_using = room; }
+void Student::set_seat_using(Seat* seat)			{ seat_using = seat; }
 
 // class Admin - get data
-std::string Admin::get_admin_id() { return admin_id; }
+std::string Admin::get_admin_id()			{ return admin_id; }
+
+// class Admin - set data
+void Admin::set_admin_id(std::string ad_id) { admin_id = ad_id };
 
 // class Seat - get data
-StudyRoom* Seat::get_belong_to() { return belong_to; }
-int Seat::get_seat_num() { return seat_num; }
-bool Seat::is_reserved() { return reservation; }
-Student* Seat::get_res_student() { return res_student; }
-bool Seat::is_away_from() { return away_from; }
+StudyRoom* Seat::get_belong_to()			{ return belong_to; }
+int Seat::get_seat_num()					{ return seat_num; }
+bool Seat::is_reserved()					{ return reservation; }
+Student* Seat::get_res_student()			{ return res_student; }
+bool Seat::is_away_from()					{ return away_from; }
 
 // class Seat - set data
-void Seat::set_reservation_reverse() { reservation = !reservation; }
-void Seat::set_res_student(Student* student) { res_student = student; }
-void Seat::set_away_from_reverse() { away_from = !away_from; }
+void Seat::set_reservation_reverse()		{ reservation = !reservation; }
+void Seat::set_res_student(Student* student){ res_student = student; }
+void Seat::set_away_from_reverse()			{ away_from = !away_from; }
 
 // class StudyRoom - get data
-int StudyRoom::get_cur_using_num() { return cur_using_num; }
-Seat* StudyRoom::get_seat(int idx) { return &(seats[idx]); }
+int StudyRoom::get_cur_using_num()			{ return cur_using_num; }
+Seat* StudyRoom::get_seat(int idx)			{ return &(seats[idx]); }
 
 // class StudyRoom - set data
-void StudyRoom::set_cur_using_num(int i) { cur_using_num = i; }
+void StudyRoom::set_cur_using_num(int i)	{ cur_using_num = i; }
 
 // class StudentDB
 int StudentDB::load_student_database() {
@@ -97,9 +100,8 @@ int StudentDB::load_student_admin_database() {
 
 	fs.close();
 
-	for (unsigned int i = 0; i < row.size(); i += 3) {
-		Admin st(row[i + 2]);
-		st.set_student_num(stoi(row[i]));
+	for (unsigned int i = 0; i < row.size(); i += 2) {
+		Admin st(row[i]);
 		st.set_password(row[i + 1]);
 		admin_database.push_back(&st);
 	}

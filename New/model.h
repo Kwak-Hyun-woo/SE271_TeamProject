@@ -19,8 +19,8 @@ private:
 		
 public:
 	Student() {}
-	Student(int num) : student_num{ num }, is_using{ false } {}
-	Student(int num, std::string pw) : student_num{ num }, password{ pw }, is_using{ false } {}
+	Student(int num) : student_num{ num } {}
+	Student(int num, std::string pw) : student_num{ num }, password{ pw } {}
 
 	virtual ~Student() {}
 	
@@ -46,6 +46,8 @@ public:
 	Admin() {}
 	Admin(std::string ad_id) : admin_id{ ad_id } {}
 	std::string get_admin_id();
+
+	void set_admin_id(std::string ad_id);
 };
 
 class Seat {
@@ -58,7 +60,7 @@ private:
 
 public:
 	Seat() {}
-	Seat(StudyRoom* study_room, int num, int pos[2]) : belong_to{ study_room }, seat_num{ num }, reservation{ false }, away_from{ false } {
+	Seat(StudyRoom* study_room, int num, int pos[2]) : belong_to{ study_room }, seat_num{ num } {
 		coordinate[0] = pos[0];
 		coordinate[1] = pos[1];
 	}
@@ -101,7 +103,7 @@ public:
 class StudentDB {
 private:
 	std::vector<Student*> student_database;				// ID, PW
-	std::vector<Admin*> admin_database;					// ID, PW, ADMIN_ID
+	std::vector<Admin*> admin_database;					// admin_ID, PW
 public:
 	int load_student_database();
 	int load_student_admin_database();
