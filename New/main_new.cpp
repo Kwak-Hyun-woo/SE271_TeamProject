@@ -6,7 +6,7 @@
 
 int main() {
 
-	UI main_interface;
+	/// 독서실 생성, 좌석 세팅
 	StudyRoom E7(10);
 	Pos temp_pos(1, 2);
 	E7.add_seat(Seat(&E7, 1, temp_pos));
@@ -18,8 +18,15 @@ int main() {
 	E7.add_seat(Seat(&E7, 4, temp_pos));
 	temp_pos(2, 5);
 	E7.add_seat(Seat(&E7, 1, temp_pos));
+	///
+
+	UI main_interface;
 
 	main_interface.show_studyroom(&E7);
+	
+	system("cls");
+
+	main_interface.user_interface();
 
 	return 0;
 }
