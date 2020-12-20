@@ -71,7 +71,6 @@ private:
 	bool reservation = false;					// 현재 예약되어 있는지
 	Student* res_student = nullptr;				// 예약한 학생
 	bool away_from = false;						// 자리 비움 상태인가?
-	Pos pos;									// 좌석의 위치
 
 public:
 	Seat() {}
@@ -81,6 +80,8 @@ public:
 	}
 
 	virtual ~Seat() {}
+
+	Pos pos;									// 좌석의 위치
 
 	// get data
 	StudyRoom* get_belong_to();
