@@ -80,7 +80,7 @@ int StudentDB::load_student_database() {
 
 	for (unsigned int i = 0; i < row.size(); i += 2) {
 		Student st(stoi(row[i]), row[i + 1]);
-		student_database.push_back(&st);
+		student_database.push_back(st);
 	}
 
 	return 0;
@@ -112,7 +112,7 @@ int StudentDB::load_student_admin_database() {
 	for (unsigned int i = 0; i < row.size(); i += 2) {
 		Admin st(row[i]);
 		st.set_password(row[i + 1]);
-		admin_database.push_back(&st);
+		admin_database.push_back(st);
 	}
 
 	return 0;
@@ -124,7 +124,7 @@ void StudentDB::save_student_database() {
 
 	for (auto student : student_database) {
 		if (student_db.size()) student_db += '\n';
-		row = std::to_string(student->get_student_num()) + ',' + student->get_password();
+		row = std::to_string(student.get_student_num()) + ',' + student.get_password();
 		student_db += row;
 	}
 
@@ -140,7 +140,7 @@ void StudentDB::save_student_admin_database() {
 
 	for (auto admin : student_database) {
 		if (admin_db.size()) admin_db += '\n';
-		row = std::to_string(admin->get_student_num()) + ',' + admin->get_password();
+		row = std::to_string(admin.get_student_num()) + ',' + admin.get_password();
 		admin_db += row;
 	}
 
@@ -150,23 +150,23 @@ void StudentDB::save_student_admin_database() {
 	fs.close();
 }
 
-void StudentDB::add_student(Student* student) {
+void StudentDB::add_student(Student student) {
 	student_database.push_back(student);
 }
-void StudentDB::add_admin(Admin* admin) {
+void StudentDB::add_admin(Admin admin) {
 	admin_database.push_back(admin);
 }
 
 Student* StudentDB::get_student(int student_num) {
 	for (auto student : student_database) {
-		if (student_num == student->get_student_num()) return student;
+		if (student_num == student.get_student_num()) return &student;
 	}
 	return nullptr;
 }
 
 Admin* StudentDB::get_admin(std::string admin_id) {
 	for (auto admin : admin_database) {
-		if (admin_id == admin->get_admin_id()) return admin;
+		if (admin_id == admin.get_admin_id()) return &admin;
 	}
 	return nullptr;
 }

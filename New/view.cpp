@@ -1,40 +1,11 @@
 #include <iostream>
-#include <windows.h>
 
 #include "model.h"
 #include "control.h"
 #include "view.h"
 
 void UI::user_interface() {
-	while (true) {
-		int sel;
-		std::cout << "\n---------------     독서실 통합 관리 프로그램     ---------------" << std::endl;
-		std::cout << std::endl << std::endl << std::endl;
-		std::cout << "1. 학생 로그인\t\t2. 관리자 로그인\t\t3. 종료" << "\n\n입력: ";
-		std::cin >> sel;
-		if (std::cin.fail() || sel < 0 || sel > 3) {
-			std::cout << "\n\n잘못된 입력입니다";
-			Sleep(500);
-			std::cin.clear();
-			std::cin.ignore(100, '\n');
-			system("cls");
-			continue;
-		}
-		else if (sel == 1) {
-			std::cout << "1 선택" << std::endl;
-			break;
-		}
-		else if (sel == 2) {
-			std::cout << "2 선택" << std::endl;
-			break;
-		}
-		else {
-			std::cout << "프로그램을 종료합니다.";
-			Sleep(1000);
-			system("cls");
-			break;
-		}
-	}
+
 }
 
 void UI::show_studyroom(StudyRoom* studyroom) {
