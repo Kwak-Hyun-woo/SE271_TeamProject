@@ -15,8 +15,6 @@ void UI::show_studyroom(StudyRoom* studyroom) {
 	int y_count = 0;
 	int seat_num = 0;
 
-
-
 	for (int i = 0; i < max_size; i++) {
 		if (i == 0) {
 			distinct_y[y_count] = studyroom->get_seat(i)->pos.y;
