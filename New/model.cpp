@@ -8,6 +8,7 @@
 
 // class Student - get data
 int Student::get_student_num() { return student_num; }
+std::string Student::get_password() { return password; }
 bool Student::get_is_using() { return is_using; }
 StudyRoom* Student::get_studyroom_using() { return studyroom_using; }
 Seat* Student::get_seat_using() { return seat_using; }
@@ -66,12 +67,7 @@ int StudentDB::load_student_database() {
 	fs.close();
 
 	for (unsigned int i = 0; i < row.size(); i += 2) {
-		int num = 0;
-		for (unsigned int j = 0; j < row[i].size(); ++j) {
-			num += pow(10, j) * int(row[i][j]);
-		}
-
-		Student st(num, row[i + 1]);
+		Student st(stoi(row[i]), row[i + 1]);
 		student_database.push_back(&st);
 	}
 
@@ -102,13 +98,8 @@ int StudentDB::load_student_admin_database() {
 	fs.close();
 
 	for (unsigned int i = 0; i < row.size(); i += 3) {
-		int num = 0;
-		for (unsigned int j = 0; j < row[i].size(); ++j) {
-			num += pow(10, j) * int(row[i][j]);
-		}
-
 		Admin st(row[i + 2]);
-		st.set_student_num(num);
+		st.set_student_num(stoi(row[i]));
 		st.set_password(row[i + 1]);
 		admin_database.push_back(&st);
 	}
@@ -116,8 +107,36 @@ int StudentDB::load_student_admin_database() {
 	return 0;
 }
 
-int StudentDB::save_student_database() {
+void StudentDB::save_student_database() {
+	std::string student_db;
+	std::string row;
 
+	for (auto student : student_database) {
+		if (student_db.size()) student_db += '\n';
+		row = std::to_string(student->get_student_num()) + ',' + student->get_password();
+		student_db += row;
+	}
+
+	std::fstream fs;
+	fs.open("student.csv");
+	fs.write(student_db.c_str(), student_db.size());
+	fs.close();
+}
+
+void StudentDB::save_student_admin_database() {
+	std::string admin_db;
+	std::string row;
+
+	for (auto admin : student_database) {
+		if (admin_db.size()) admin_db += '\n';
+		row = std::to_string(admin->get_student_num()) + ',' + admin->get_password();
+		admin_db += row;
+	}
+
+	std::fstream fs;
+	fs.open("admin.csv");
+	fs.write(admin_db.c_str(), admin_db.size());
+	fs.close();
 }
 
 void StudentDB::add_student(Student* student) {

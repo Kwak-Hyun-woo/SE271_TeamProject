@@ -26,6 +26,7 @@ public:
 	
 	// get data
 	int get_student_num();
+	std::string get_password();
 	bool get_is_using();
 	StudyRoom* get_studyroom_using();
 	Seat* get_seat_using();
@@ -105,8 +106,8 @@ public:
 	int load_student_database();
 	int load_student_admin_database();
 
-	int save_student_database();
-	int save_student_admin_database();
+	void save_student_database();
+	void save_student_admin_database();
 
 	void add_student(Student* student);
 	void add_admin(Admin* admin);
