@@ -11,10 +11,8 @@ void Register::register_student(StudentDB* db) {
 	std::cout << std::endl;
 	std::cout << "비밀번호를 입력해 주세요: ";
 	std::cin >> pwd;
-	std::cout << std::endl;;
-	Student student(st_num);
-	student.set_password(pwd);
-	db->add_student(&student);
+	std::cout << std::endl;
+	db->add_student(Student(st_num, pwd));
 	std::cout << "회원가입이 완료되었습니다." << std::endl;
 }
 
@@ -26,10 +24,8 @@ void Register::register_admin(StudentDB* db) {
 	std::cout << std::endl;
 	std::cout << "비밀번호를 입력해 주세요: ";
 	std::cin >> pwd;
-	std::cout << std::endl;;
-	Admin admin(ad_id);
-	admin.set_password(pwd);
-	db->add_admin(&admin);
+	std::cout << std::endl;
+	db->add_admin(Admin(ad_id, pwd));
 	std::cout << "회원가입이 완료되었습니다." << std::endl;
 }
 

@@ -24,7 +24,7 @@ public:
 };
 
 class Student {
-private:
+protected:
 	int student_num = NULL;						// student number
 	std::string password = NULL;				// password for login / reservation
 	bool is_using = false;						// 현재 좌석을 예약하고 이용중인가?
@@ -59,6 +59,7 @@ private:
 public:
 	Admin() {}
 	Admin(std::string ad_id) : admin_id{ ad_id } {}
+	Admin(std::string ad_id, std::string pwd) : Student(0, pwd), admin_id{ ad_id } {}
 	std::string get_admin_id();
 
 	void set_admin_id(std::string ad_id);
@@ -124,8 +125,8 @@ public:
 // 프로그램에 등록된 Student/Admin을 관리하는 StudentDB 클래스
 class StudentDB {
 private:
-	std::vector<Student*> student_database;				// ID, PW
-	std::vector<Admin*> admin_database;					// admin_ID, PW
+	std::vector<Student> student_database;				// ID, PW
+	std::vector<Admin> admin_database;					// admin_ID, PW
 public:
 	int load_student_database();
 	int load_student_admin_database();
@@ -133,8 +134,8 @@ public:
 	void save_student_database();
 	void save_student_admin_database();
 
-	void add_student(Student* student);
-	void add_admin(Admin* admin);
+	void add_student(Student student);
+	void add_admin(Admin admin);
 
 	Student* get_student(int student_num);
 	Admin* get_admin(std::string admin_id);
