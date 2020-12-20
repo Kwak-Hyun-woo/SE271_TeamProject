@@ -24,7 +24,7 @@ void Student::set_seat_using(Seat* seat)			{ seat_using = seat; }
 std::string Admin::get_admin_id()			{ return admin_id; }
 
 // class Admin - set data
-void Admin::set_admin_id(std::string ad_id) { admin_id = ad_id };
+void Admin::set_admin_id(std::string ad_id) { admin_id = ad_id; }
 
 // class Seat - get data
 StudyRoom* Seat::get_belong_to()			{ return belong_to; }
@@ -152,10 +152,12 @@ Student* StudentDB::get_student(int student_num) {
 	for (auto student : student_database) {
 		if (student_num == student->get_student_num()) return student;
 	}
+	return nullptr;
 }
 
 Admin* StudentDB::get_admin(std::string admin_id) {
 	for (auto admin : admin_database) {
 		if (admin_id == admin->get_admin_id()) return admin;
 	}
+	return nullptr;
 }

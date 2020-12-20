@@ -31,6 +31,6 @@ public:
 
 class LogIn {
 public:
-	void student_log_in(StudentDB* db, ControlByStudent* student);
-	void admin_log_in(StudentDB* db, ControlByAdmin* admin);
+	void student_log_in(StudentDB* db, ControlByStudent* control_student);
+	void admin_log_in(StudentDB* db, ControlByAdmin* control_admin);
 };
