@@ -7,7 +7,7 @@
 int main() {
 
 	UI main_interface;
-	StudyRoom E7;
+	StudyRoom E7(10);
 	Pos temp_pos(1, 2);
 	E7.add_seat(Seat(&E7, 1, temp_pos));
 	temp_pos(1, 3);

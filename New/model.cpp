@@ -44,8 +44,15 @@ int StudyRoom::get_cur_using_num()			{ return cur_using_num; }
 Seat* StudyRoom::get_seat(int idx)			{ return &(seats[idx]); }
 
 // class StudyRoom - set data
-void StudyRoom::set_cur_using_num(int i)	{ cur_using_num = i; }
-void StudyRoom::add_seat(Seat seat)			{ seats.push_back(seat); }
+void StudyRoom::set_cur_using_num(int i) { cur_using_num = i; }
+void StudyRoom::add_seat(Seat seat) {
+	if (cur_using_num == max_seat_num) {
+		std::cout << "더 이상 좌석을 추가할 수 없습니다." << std::endl;
+		return;
+	}
+	seats.push_back(seat);
+	cur_using_num++;
+}
 
 // class StudentDB
 int StudentDB::load_student_database() {

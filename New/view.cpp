@@ -10,12 +10,12 @@ void UI::UserInterface() {
 
 void UI::show_studyroom(StudyRoom* studyroom) {
 	// 전체 좌석들 중 서로 다른 y coordinate 탐색
-	int max_size = studyroom->get_max_seat_num();
-	int* distinct_y = new int[max_size];
+	int size = studyroom->get_cur_using_num();
+	int* distinct_y = new int[size];
 	int y_count = 0;
 	int seat_num = 0;
 
-	for (int i = 0; i < max_size; i++) {
+	for (int i = 0; i < size; i++) {
 		if (i == 0) {
 			distinct_y[y_count] = studyroom->get_seat(i)->pos.y;
 			y_count++;
@@ -38,7 +38,7 @@ void UI::show_studyroom(StudyRoom* studyroom) {
 	for (int i = 0; i < y_count; i++) {
 		coordinates[i].append(0);
 	}
-	for (int i = 0; i < max_size; i++) {
+	for (int i = 0; i < size; i++) {
 		for (int y_index = 0; y_index < y_count; y_index++) {
 			if (studyroom->get_seat(i)->pos.y == distinct_y[y_index]) {
 				coordinates[y_index].append(studyroom->get_seat(i)->pos.x);
@@ -114,6 +114,8 @@ void UI::show_studyroom(StudyRoom* studyroom) {
 			std::cout << std::endl;
 		}
 	}
+	delete[] distinct_y;
+	delete[] coordinates;
 }
 
 void UI::show_seat_status(Seat* seat) {
