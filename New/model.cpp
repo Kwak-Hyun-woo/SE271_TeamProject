@@ -1,19 +1,26 @@
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <istream>
+#include <math.h>
+
 #include "model.h"
 
-// class Studnet - get data
+// class Student - get data
 int Student::get_student_num() { return student_num; }
 bool Student::get_is_using() { return is_using; }
 StudyRoom* Student::get_studyroom_using() { return studyroom_using; }
 Seat* Student::get_seat_using() { return seat_using; }
 
-// class Studnet - set data
+// class Student - set data
 void Student::set_student_num(int num) { student_num = num; }
 void Student::set_password(std::string pwd) { password = pwd; }
 void Student::set_is_using_reverse() { is_using = !is_using; }
 void Student::set_studyroom_using(StudyRoom* room) { studyroom_using = room; }
 void Student::set_seat_using(Seat* seat) { seat_using = seat; }
 
-
+// class Admin - get data
+std::string Admin::get_admin_id() { return admin_id; }
 
 // class Seat - get data
 StudyRoom* Seat::get_belong_to() { return belong_to; }
@@ -27,8 +34,6 @@ void Seat::set_reservation_reverse() { reservation = !reservation; }
 void Seat::set_res_student(Student* student) { res_student = student; }
 void Seat::set_away_from_reverse() { away_from = !away_from; }
 
-
-
 // class StudyRoom - get data
 int StudyRoom::get_cur_using_num() { return cur_using_num; }
 Seat* StudyRoom::get_seat(int idx) { return &(seats[idx]); }
@@ -37,6 +42,84 @@ Seat* StudyRoom::get_seat(int idx) { return &(seats[idx]); }
 void StudyRoom::set_cur_using_num(int i) { cur_using_num = i; }
 
 // class StudentDB
+int StudentDB::load_student_database() {
+	std::fstream fs;
+	std::stringstream ss;
+	std::vector<std::string> row;
+	
+	fs.open("student.csv", std::ios::in);
+
+	if (fs.fail()) {
+		return 1;
+	}
+
+	while (fs.good()) {
+		char c = fs.get();
+		if (c != '\n' && c != ',') {
+			ss << (char)fs.get();
+		}
+		else {
+			row.push_back(ss.str());
+		}
+	}
+
+	fs.close();
+
+	for (unsigned int i = 0; i < row.size(); i += 2) {
+		int num = 0;
+		for (unsigned int j = 0; j < row[i].size(); ++j) {
+			num += pow(10, j) * int(row[i][j]);
+		}
+
+		Student st(num, row[i + 1]);
+		student_database.push_back(&st);
+	}
+
+	return 0;
+}
+
+int StudentDB::load_student_admin_database() {
+	std::fstream fs;
+	std::stringstream ss;
+	std::vector<std::string> row;
+
+	fs.open("admin.csv", std::ios::in);
+
+	if (fs.fail()) {
+		return 1;
+	}
+
+	while (fs.good()) {
+		char c = fs.get();
+		if (c != '\n' && c != ',') {
+			ss << (char)fs.get();
+		}
+		else {
+			row.push_back(ss.str());
+		}
+	}
+
+	fs.close();
+
+	for (unsigned int i = 0; i < row.size(); i += 3) {
+		int num = 0;
+		for (unsigned int j = 0; j < row[i].size(); ++j) {
+			num += pow(10, j) * int(row[i][j]);
+		}
+
+		Admin st(row[i + 2]);
+		st.set_student_num(num);
+		st.set_password(row[i + 1]);
+		admin_database.push_back(&st);
+	}
+
+	return 0;
+}
+
+int StudentDB::save_student_database() {
+
+}
+
 void StudentDB::add_student(Student* student) {
 	student_database.push_back(student);
 }
@@ -44,9 +127,14 @@ void StudentDB::add_admin(Admin* admin) {
 	admin_database.push_back(admin);
 }
 
-void StudentDB::get_student(int student_num) {
-
+Student* StudentDB::get_student(int student_num) {
+	for (auto student : student_database) {
+		if (student_num == student->get_student_num()) return student;
+	}
 }
-void get_admin(std::string admin_id) {
 
+Admin* StudentDB::get_admin(std::string admin_id) {
+	for (auto admin : admin_database) {
+		if (admin_id == admin->get_admin_id()) return admin;
+	}
 }

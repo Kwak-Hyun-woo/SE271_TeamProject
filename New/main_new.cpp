@@ -1,7 +1,9 @@
-#include "model.h"
-#include "control.h"
 #include <iostream>
 
-void main() {
+#include "model.h"
+#include "control.h"
+#include "view.h"
 
+int main() {
+	return 0;
 }

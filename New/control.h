@@ -8,12 +8,6 @@ public:
 	void register_admin(StudentDB* db);
 };
 
-class LogIn {
-public:
-	void student_log_in(StudentDB* db, ControlByStudent* student);
-	void admin_log_in(StudentDB* db, ControlByAdmin* admin);
-};
-
 class ControlByStudent {
 private:
 	Student* student;
@@ -33,4 +27,10 @@ public:
 	void add_studyroom();
 	void change_seat_coordinate();
 	void force_cancel_reservation(Seat* seat);
+};
+
+class LogIn {
+public:
+	void student_log_in(StudentDB* db, ControlByStudent* student);
+	void admin_log_in(StudentDB* db, ControlByAdmin* admin);
 };
