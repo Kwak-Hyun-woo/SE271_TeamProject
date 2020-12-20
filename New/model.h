@@ -99,19 +99,24 @@ public:
 
 class StudyRoom {
 private:
+	std::string name = NULL;
 	int max_seat_num = NULL;					// 전체 좌석 수
 	int cur_using_num = NULL;					// 이용중인 좌석 수
 	std::vector<Seat> seats;					// StudyRoom에 포함된 Seat instance vector
+
 public:
 	StudyRoom() {}
 	StudyRoom(int max) : max_seat_num{ max }, cur_using_num{ 0 } {}
+	StudyRoom(std::string room_name, int max) : name{ room_name }, max_seat_num { max }, cur_using_num{ 0 } {}
 
 	// get data
+	std::string get_name();
 	int get_max_seat_num();
 	int get_cur_using_num();
 	Seat* get_seat(int idx);
 
 	// set data
+	void set_name(std::string studyroom_name);
 	void set_cur_using_num(int i);
 	void add_seat(Seat seat);
 };
@@ -137,7 +142,7 @@ public:
 
 class StudyRoomDB {
 private:
-	std::vector<StudyRoom*> studyroom_database;
+	std::vector<StudyRoom*> studyroom_database;			// name, size /n x1, y1, x2, y2 ...
 public:
 	int load_studyroom_database();
 	void save_studyroom_database();
