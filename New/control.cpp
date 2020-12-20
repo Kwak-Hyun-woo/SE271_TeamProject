@@ -87,8 +87,8 @@ void LogIn::admin_log_in(StudentDB* db, ControlByAdmin* control_admin) {
 }
 
 // ControlByStudent
-void ControlByStudent::set_student(Student* student) {
-	student = student;
+void ControlByStudent::set_student(Student* controller) {
+	student = controller;
 }
 
 void ControlByStudent::make_reservation(Seat* seat) {
@@ -116,9 +116,9 @@ void ControlByStudent::cancel_reservation() {
 
 	std::cout << student->get_seat_using()->get_seat_num() << "번 좌석 예약이 취소되었습니다." << std::endl;
 	student->set_is_using_reverse();
-	student->get_seat_using()->set_res_student(NULL);
+	student->get_seat_using()->set_res_student(nullptr);
 	student->get_seat_using()->set_reservation_reverse();
-	student->set_seat_using(NULL);
+	student->set_seat_using(nullptr);
 	student->get_seat_using()->get_belong_to()->set_cur_using_num(student->get_seat_using()->get_belong_to()->get_cur_using_num() - 1);
 }
 
@@ -128,4 +128,35 @@ void ControlByStudent::report_away_from(Seat* seat) {			// 현재는 그냥 신고하면 
 
 void ControlByStudent::cancel_away_from() {
 	student->get_seat_using()->set_away_from_reverse();
+}
+
+// ControlByAdmin
+void ControlByAdmin::set_admin(Admin* controller) {
+	admin = controller;
+}
+
+void ControlByAdmin::add_studyroom() {
+
+}
+
+void ControlByAdmin::change_seat_coordinate() {
+
+}
+
+void ControlByAdmin::force_cancel_reservation(Seat* seat) {
+	if (!(seat->is_reserved())) {
+		std::cout << "예약중인 좌석이 없습니다." << std::endl;
+		return;
+	}
+
+	std::cout << seat->get_seat_num() << "번 좌석 예약이 취소되었습니다." << std::endl;
+	seat->get_res_student()->set_is_using_reverse();
+	seat->get_res_student()->set_seat_using(nullptr);
+	seat->get_res_student()->set_studyroom_using(nullptr);
+
+	seat->set_reservation_reverse();
+	seat->set_res_student(nullptr);
+	seat->set_away_from_reverse();
+
+	seat->get_belong_to()->set_cur_using_num(seat->get_belong_to()->get_cur_using_num() - 1);
 }

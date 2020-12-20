@@ -10,7 +10,7 @@ public:
 
 class ControlByStudent {
 private:
-	Student* student;
+	Student* student = nullptr;
 public:
 	void set_student(Student* student);
 	void make_reservation(Seat* seat);			// ÁÂ¼® ¿¹¾à
@@ -21,7 +21,7 @@ public:
 
 class ControlByAdmin : public ControlByStudent {
 private:
-	Admin* admin;
+	Admin* admin = nullptr;
 public:
 	void set_admin(Admin* admin);
 	void add_studyroom();
