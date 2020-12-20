@@ -8,7 +8,9 @@
 int main() {
 
 	/// 독서실 생성, 좌석 세팅
-	StudyRoom E7(10);
+	StudyRoom E7("E7", 10);
+	std::cout << "DONE" << std::endl;
+	
 	Pos temp_pos(1, 2);
 	E7.add_seat(Seat(&E7, 1, temp_pos));
 	temp_pos(1, 3);
@@ -68,6 +70,5 @@ int main() {
 			break;
 		}
 	}
-
 	return 0;
 }

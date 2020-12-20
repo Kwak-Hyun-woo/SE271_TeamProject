@@ -106,7 +106,6 @@ private:
 
 public:
 	StudyRoom() {}
-	StudyRoom(int max) : max_seat_num{ max }, cur_using_num{ 0 } {}
 	StudyRoom(std::string room_name, int max) : name{ room_name }, max_seat_num { max }, cur_using_num{ 0 } {}
 
 	// get data

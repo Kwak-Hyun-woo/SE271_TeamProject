@@ -203,7 +203,7 @@ int StudyRoomDB::load_studyroom_database() {
 
 	for (unsigned int i = 0; i < rows.size(); ++i) {
 		StudyRoom room(rows[i][0], stoi(rows[i][1]));
-		for (unsigned int j = 2; j < room.get_max_seat_num() * 2 + 2; j += 2) {
+		for (int j = 2; j < room.get_max_seat_num() * 2 + 2; j += 2) {
 			Pos pos(stoi(row[j]), stoi(row[j + 1]));
 			Seat seat(&room, (j - 2) / 2, pos);
 			room.add_seat(seat);
